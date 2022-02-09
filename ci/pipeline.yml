@@ -206,14 +206,6 @@ resources:
     branch: #@ data.values.git_branch
     private_key: #@ data.values.github_private_key
 
-- name: lnd-sidecar-image-def
-  type: git
-  source:
-    paths: [ci/lnd-sidecar-image/Dockerfile]
-    uri: #@ data.values.git_uri
-    branch: #@ data.values.git_branch
-    private_key: #@ data.values.github_private_key
-
 resource_types:
 - name: terraform
   type: docker-image
