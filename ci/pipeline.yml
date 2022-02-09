@@ -24,7 +24,7 @@ smoketest_kubeconfig: #@ data.values.staging_smoketest_kubeconfig
 
 groups:
 - name: galoy
-  jobs: 
+  jobs:
   - galoy-testflight
   - bump-galoy-in-deployments
 - name: monitoring
@@ -32,13 +32,13 @@ groups:
   - monitoring-testflight
   - bump-monitoring-in-deployments
 - name: bitcoin
-  jobs: 
+  jobs:
 #@ for chart in bitcoin_charts:
   - #@ testflight_job_name(chart)
   - #@ bump_in_deployments_job_name(chart)
 #@ end
 - name: addons
-  jobs: 
+  jobs:
 #@ for chart in addons_charts:
   - #@ testflight_job_name(chart)
   - #@ bump_in_deployments_job_name(chart)
@@ -64,6 +64,8 @@ groups:
 - name: images
   jobs:
   - build-chain-dl-image
+- name: lnd-sidecar-image
+  jobs:
   - build-lnd-sidecar-image
 
 jobs:
@@ -200,6 +202,14 @@ resources:
   type: git
   source:
     paths: [images/lnd-sidecar/Dockerfile]
+    uri: #@ data.values.git_uri
+    branch: #@ data.values.git_branch
+    private_key: #@ data.values.github_private_key
+
+- name: lnd-sidecar-image-def
+  type: git
+  source:
+    paths: [ci/lnd-sidecar-image/Dockerfile]
     uri: #@ data.values.git_uri
     branch: #@ data.values.git_branch
     private_key: #@ data.values.github_private_key
