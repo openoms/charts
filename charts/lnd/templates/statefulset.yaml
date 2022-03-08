@@ -61,14 +61,13 @@ spec:
       containers:
         {{- if and (ne .Values.global.network "regtest") .Values.autoGenerateSeed.enabled }}
         - name: init-wallet
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.sidecarImage.repository }}@{{ .Values.sidecarImage.digest }}"
           command: ['/bin/sh']
           args:
           - '-c'
           - |
             if [ ! -f /root/.lnd/data/chain/bitcoin/${NETWORK}/admin.macaroon ]; then
               while ! test -f /root/.lnd/tls.cert; do sleep 1; done
-              apk update; apk add expect
               /home/alpine/walletInit.exp ${NETWORK} $LND_PASS
             fi
             # Trap is required otherwise signals are not handled
