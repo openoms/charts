@@ -6,7 +6,7 @@ Currently successfully brings up charts - no guarantee that everything is workin
 ## How To
 
 dependencies:
-- k3d
+- microk8s
 - terraform
 - kubectl
 
