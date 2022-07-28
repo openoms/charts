@@ -1,8 +1,10 @@
-name: dev-smoketest
+name: test-timeouts
 on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
     branches:
-      ci-testflight-github-action
+      test-timeouts
+  workflow_dispatch:
 jobs:
   smoketest:
     name: Hit smoketests against Charts in Dev Setup
@@ -16,4 +18,3 @@ jobs:
           pushd dev
           source ./.envrc
           make all
-
